@@ -35,17 +35,41 @@ public class Vaccines_Request{
             
             try{
                 choice = Integer.parseInt(System.console().readLine());
-                System.out.print("\033[H\033[2J");
-                System.out.flush();
+                clearScreen();
             }
             catch(Exception er){
-                System.out.print("\033[H\033[2J");
-                System.out.flush();
+                clearScreen();
                 System.out.println("Enter a value between 0 - 9");
+            }
+
+            switch(choice){
+                case 1:
+                    ClientV objClientV = new ClientV();
+                    clearScreen();
+
+                    System.out.println("Enter Clients First Name:");
+                    String firstName = System.console().readLine();
+
+                    System.out.println("Enter Clients Last Name:");
+                    String lastName = System.console().readLine();
+
+                    System.out.println("Enter Clients ID:");
+                    String idClient = System.console().readLine();
+
+                    System.out.println("Enter Clients Phone:");
+                    String phoneClient = System.console().readLine();
+
+                    objClientV.set_Data(idClient, phoneClient, firstName, lastName);
+                    System.out.println(objClientV.toString());
+
+                    break;
             }
 
         }while(choice != 9);
     }
 
-    
+    public static void clearScreen(){
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
 }
