@@ -1,12 +1,19 @@
 package Vaccine_Request;
 
-public class ClientV extends Name {
-    private String idClient, phoneClient;
+import java.sql.Date;
+import java.time.LocalDateTime;
 
-    public void set_Data(String idClient, String phoneClient, String fName, String lName){
+public class ClientV{
+    private String idClient, phoneClient;
+    private Name name;
+    private BasicVaccine vaccine;
+
+    public ClientV(String idClient, String phoneClient, String fName, String lName, String company_name, int company_id, int batch_number, LocalDateTime vaccine_date, boolean complation_status){
         this.idClient = idClient;
         this.phoneClient = phoneClient;
-        super.set_Name(fName, lName);
+        name = new Name(fName, lName);
+        vaccine = new BasicVaccine(company_name, company_id, batch_number, vaccine_date, complation_status);
+        
     }
 
     public String get_idClient(){
@@ -18,6 +25,6 @@ public class ClientV extends Name {
     }
 
     public String toString(){
-        return get_lastName()+","+get_firstName()+","+get_idClient()+","+get_phoneClient();
+        return name+","+get_idClient()+","+get_phoneClient()+","+vaccine;
     }
 }

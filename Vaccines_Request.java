@@ -1,6 +1,12 @@
 package Vaccine_Request;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
+import javax.xml.crypto.Data;
+
 import java.io.File;
 
 public class Vaccines_Request{
@@ -46,8 +52,15 @@ public class Vaccines_Request{
 
             switch(choice){
                 case 1:
-                    ClientV objClientV = new ClientV();
+                    ClientV objClientV;
+                    int company_id=0, batch_number=0;
+                    String company_name="";
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    LocalDateTime vaccine_date = LocalDateTime.now();
+                    boolean complation_status = false;
+
                     clearScreen();
+                    //Data vaccine_date = new Date();
 
                     System.out.println("Enter Clients First Name:");
                     String firstName = System.console().readLine();
@@ -61,8 +74,62 @@ public class Vaccines_Request{
                     System.out.println("Enter Clients Phone:");
                     String phoneClient = System.console().readLine();
 
-                    objClientV.set_Data(idClient, phoneClient, firstName, lastName);
-                    System.out.println(objClientV.toString());
+                    //reading the code for selected vaccine
+                    //loop until select a valid value
+                    while(!(company_id<=4) || !(company_id>=1)){
+                        System.out.println("1 - Pfizer");
+                        System.out.println("2 - Astra-Zenica");
+                        System.out.println("3 - Moderna");
+                        System.out.println("4 - Jhonson&Johnson");
+                        System.out.println("Enter vaccine code number:");
+                        
+                        try{
+                            company_id = Integer.parseInt(System.console().readLine());
+                            
+                            //validating company_id in right range
+                            if(company_id>4 || company_id<1){
+                                System.out.println("Invalid value of:"+company_id+". Enter a number between 1-4");
+                            }
+                        }
+                        //error throws when input is not integer value
+                        catch(Error er){
+                            System.out.println("Enter a number between 1-4");
+                        }
+                    }
+
+                    //selecting company name according to company code
+                    switch (company_id) {
+                        case 1:
+                            company_name="Pfizer";
+                            break;
+
+                        case 2:
+                            company_name="Astra-Zenica";
+                            break;
+
+                        case 3:
+                            company_name="Moderna";
+                            break;
+
+                        case 4:
+                            company_name="Johnson&Johnson";
+                            complation_status=true;
+                            break;
+                    }
+
+                    while(batch_number==0){
+                        System.out.println("Enter batch number for this vaccine:");
+                        try{
+                            batch_number = Integer.parseInt(System.console().readLine());
+                        }
+                        catch(Error er){
+                            System.out.println("Batch number is incorrect. Please try again with a valid batch number.");
+                        }
+                    }
+
+                    objClientV = new ClientV(idClient, phoneClient, firstName, lastName, company_name, company_id, batch_number, vaccine_date, complation_status);
+                    
+                    System.out.println(objClientV);
 
                     break;
             }
