@@ -11,6 +11,7 @@ import java.io.File;
 
 public class Vaccines_Request{
     public static void main(String[] args){
+        VaccineCentre objvaccinecentre = new VaccineCentre();
         int choice = 0;
 
         File file = new File("Resources/records.txt");
@@ -131,9 +132,47 @@ public class Vaccines_Request{
                     }
 
                     objClientV = new ClientV(idClient, phoneClient, firstName, lastName, company_name, company_id, batch_number, vaccine_date, complation_status);
+                    objvaccinecentre.add_client(objClientV);
                     
-                    System.out.println(objClientV);
+                    //System.out.println(objClientV);
+                    //objvaccinecentre.show_all_clients();
 
+                    break;
+
+                case 2:
+                    System.out.println("Enter client id code to remove:");
+                    String id_client = System.console().readLine();
+                    objvaccinecentre.remoe_client(id_client);
+                    break;
+
+                case 3:
+                    System.out.println("Enter client code to find:");
+                    String idclient = System.console().readLine();
+                    objvaccinecentre.find_client(idclient);
+                    /*int index = objvaccinecentre.find_client(idclient);
+                    if(index==-1){
+                        System.out.println("This client doesnt exist!");
+                    }
+                    else{
+                        System.out.println(objvaccinecentre.get_client(index));
+                    }*/
+                    
+                    break;
+
+                case 4:
+                    objvaccinecentre.show_all_clients();
+                    break;
+
+                case 5:
+                    break;
+
+                case 6:
+                    break;
+
+                case 7:
+                    break;
+
+                case 8:
                     break;
             }
 
