@@ -45,7 +45,7 @@ public class Vaccines_Request{
                 choice = Integer.parseInt(System.console().readLine());
                 clearScreen();
             }
-            catch(Exception er){
+            catch(Exception e){
                 clearScreen();
                 System.out.println("Enter a value between 0 - 9");
             }
@@ -55,7 +55,7 @@ public class Vaccines_Request{
                     ClientV objClientV;
                     int company_id=0, batch_number=0;
                     String company_name="";
-                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    //DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                     LocalDateTime vaccine_date = LocalDateTime.now();
                     boolean complation_status = false;
 
@@ -88,11 +88,13 @@ public class Vaccines_Request{
                             
                             //validating company_id in right range
                             if(company_id>4 || company_id<1){
+                                System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
                                 System.out.println("Invalid value of:"+company_id+". Enter a number between 1-4");
                             }
                         }
                         //error throws when input is not integer value
-                        catch(Error er){
+                        catch(Exception e){
+                            System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
                             System.out.println("Enter a number between 1-4");
                         }
                     }
@@ -122,7 +124,8 @@ public class Vaccines_Request{
                         try{
                             batch_number = Integer.parseInt(System.console().readLine());
                         }
-                        catch(Error er){
+                        catch(Exception e){
+                            System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
                             System.out.println("Batch number is incorrect. Please try again with a valid batch number.");
                         }
                     }

@@ -1,6 +1,5 @@
 package Vaccine_Request;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 public class ClientV{
