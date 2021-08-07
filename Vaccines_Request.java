@@ -22,6 +22,8 @@ public class Vaccines_Request{
         }
 
         do{
+            System.out.println("Cork Vaccination Center");
+            System.out.println("===================");
             System.out.println("1 - Add a Client for this Vaccine Centre");
             System.out.println("2 - Remove a Client at this Vaccine Centre");
             System.out.println("3 - Record a Clients First Vaccination");
