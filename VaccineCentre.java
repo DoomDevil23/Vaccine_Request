@@ -12,38 +12,50 @@ import java.time.LocalDate;
 //import Vaccine_Request.ClientV;
 
 public class VaccineCentre {
-    private String name_VaccineCentre, eircode_VaccineCentre;
+    private String name_of_centre, eircode;
     private List<ClientV> clientlist;
 
-    //CONSTRUCTOR
+    /********** CLASS CONSTRUCTOR **********/
     public VaccineCentre(){
-        name_VaccineCentre = "Cork Vaccination Centre";
-        eircode_VaccineCentre = "123456";
+        name_of_centre = "Cork Vaccination Centre";
+        eircode = "123456";
 
         clientlist = new ArrayList<ClientV>();
+    }
+
+    /********** GETTERS **********/
+
+    public String get_name_of_centre(){
+        return name_of_centre;
+    }
+
+    public String get_eircode(){
+        return eircode;
     }
 
     public ClientV get_clientlist(){
         return clientlist;
     }
 
-    //FUNCTION TO ADD NEW CLIENT TO CLIENTS LIST
+    /********* FUNCTION TO ADD NEW CLIENT TO CLIENTS LIST *********/
     public void add_client(ClientV cliente){
         clientlist.add(cliente);
     }
 
-    //SHOWS ALL CLIENTS AND ATTRIBUTES IN CLIENTS LIST
+    /********* SHOWS ALL CLIENTS AND ATTRIBUTES IN CLIENTS LIST *********/
     public void show_all_clients(){
+        //FORMATTING OUTPUT
         System.out.println("xxxxxxxxxxxxxxxxxxxx");
         System.out.println("Clients");
         System.out.println("xxxxxxxxxxxxxxxxxxxx");
+        //LOOP FOR PRINTING EACH ELEMENT IN CLIENTLIST
         for(ClientV client : clientlist){
             System.out.println(client);
         }
         System.out.println("xxxxxxxxxxxxxxxxxxxx");
     }
 
-    //FUNCTION FOR DELETING A CLIENT FROM CLIENTS LIST BY ID
+    /********** FUNCTION FOR DELETING A CLIENT FROM CLIENTS LIST BY ID **********/
     public void remove_client(String id_client){
         int index = find_clientIndex(id_client);
         
@@ -57,7 +69,7 @@ public class VaccineCentre {
         }
     }
 
-    //function to search a client by id
+    /********* FUNCTION TO SEARCH A CLIENT INDEX IN LIST BY ID *********/
     public int find_clientIndex(String id_client){
         int i=0, index=-1;
 
@@ -73,6 +85,7 @@ public class VaccineCentre {
         return index;
     }
 
+    //MAY BE REMOVED AND USE THE PREVIUS FUNCTION (?)
     public ClientV find_client(int index){
         return clientlist.get(index);
     }
@@ -83,7 +96,7 @@ public class VaccineCentre {
         clientlist.set(index, objclientupdate);
     }
 
-    //THIS FUNCTION LOADS CLIENTS DATA FROM A TXT FILE
+    /********* THIS FUNCTION LOADS CLIENTS DATA FROM A TXT FILE *********/
     public void load_client_data(File file, VaccineCentre objvaccinecentre){
         try{
             //OBJECT FROM BUFFEREDREADER CLASS THAT BUFFERE TXT FILE DATA
@@ -96,7 +109,7 @@ public class VaccineCentre {
 
             ClientV client=null;
 
-            //**********LOOP FOR READING EACH LINE IN TXT FILE**********
+            //LOOP FOR READING EACH LINE IN TXT FILE
             while((line=br.readLine()) != null){
 
                 //CONDITION USED WHEN A CLIENT IS NOT VACCINATED. IN CASE TRUE IT USES CONSTRUCTOR WITHOUT VACCINE ATTRIBUTES
@@ -116,12 +129,13 @@ public class VaccineCentre {
                 //ADDING CLIENT TO CURRENT CLIENTS LIST FOR THE VACCINE CENTRE
                 objvaccinecentre.add_client(client);
             }
+            br.close();
         }
         catch(Exception e){}
 
     }
 
-    //THIS FUNCTION SAVES CLIENTS DATA IN A TXT FILE
+    /********* THIS FUNCTION SAVES CLIENTS DATA IN A TXT FILE *********/
     public void save_client_data(File file){
         try{
             FileWriter writer = new FileWriter(file);
@@ -134,18 +148,25 @@ public class VaccineCentre {
         catch(Exception e){}
     }
 
-    //THIS FUNCTION IS FOR SPLITTING TXT LINES AND GETTING THE VALUES FOR CLASSES ATRIBUTES
+    
+    /********* THIS METHOD RETURN A LIST WITH COMMA SEPARATORS INDEXES *********/
+    public static ArrayList<Integer> get_positions(String line){
+         //IN THIS LIST IS STORED ALL INDEXES FOR <<,>> THAT SEPARATES ATTRIBUTES
+         ArrayList<Integer> positions = new ArrayList<Integer>();
+
+         //THIS LOOP SEARCH EVERY <<,>> INDEX AND STORES IN <<POSITIONS>> LIST FOR USING LATER
+         for (int i = -1; (i = line.indexOf(",", i + 1)) != -1; i++) {
+             positions.add(i);
+         }
+         return positions;
+    }
+
+    /********* THIS FUNCTION IS FOR SPLITTING TXT LINES AND GETTING THE VALUES FOR CLASSES ATRIBUTES *********/
     public String split_txt_line(String line, int option){
         //VALUE TO RETURN EACH ATTRIBUTE
         String value=null;
         
-        //IN THIS LIST IS STORED ALL INDEXES FOR <<,>> THAT SEPARATES ATTRIBUTES
-        List<Integer> positions = new ArrayList<Integer>();
-
-        //THIS LOOP SEARCH EVERY <<,>> INDEX AND STORES IN <<POSITIONS>> LIST FOR USING LATER
-        for (int i = -1; (i = line.indexOf(",", i + 1)) != -1; i++) {
-            positions.add(i);
-        }
+       ArrayList<Integer> positions = get_positions(line);
 
         //**************VALIDATION FOR GETTING ATTRIBUTES FROM TEXT FILE LINES**************
         //FIRST ATTRIBUTE STARTS AT INDEX 0
@@ -168,12 +189,15 @@ public class VaccineCentre {
         return value;
     }
 
-    //THIS FUNCTION IS FOR SHOWING THE % OF CLIENTS THAT HAVE BEEN GIVEN EACH OF THE VACCINES TYPE
+    /********** THIS FUNCTION IS FOR SHOWING THE % OF CLIENTS THAT HAVE BEEN GIVEN EACH OF THE VACCINES TYPE **********/
     public void show_stats(){
+        //COUNTERS
         int vaccine_count = 0, pfizer_count = 0, astra_count = 0, moderna_count = 0, johnson_count = 0;
+        //LOOP FOR SEARCHING IN CLIENTS LIST
         for(ClientV client : clientlist){
+            //CONDITION FOR ONLY INCLUDING VACCINATED CLIENTS IN STATS
             if(client.get_vaccine() != null){
-                vaccine_count += 1;
+                vaccine_count++;
                 switch(client.get_vaccine().get_company_id()){
                     case 1:
                         pfizer_count++;
@@ -191,6 +215,7 @@ public class VaccineCentre {
             }
         }
 
+        //FORMATTING INTEGERS INTO FLOATS TO GET PERCENTAGE STATS
         float pfizer_percentage = (pfizer_count*100.0f)/vaccine_count;
         float astra_percentage = (astra_count*100.0f)/vaccine_count;
         float moderna_percentage = (moderna_count*100.0f)/vaccine_count;
@@ -203,9 +228,11 @@ public class VaccineCentre {
         System.out.println("Clients vaccinated: "+vaccine_count);
     }
 
-    //THIS FUNCTION IS FOR SHOWING CLIENTS EXPECTING SECOND DOSE
+    /********** THIS FUNCTION IS FOR SHOWING CLIENTS EXPECTING SECOND DOSE **********/
     public void show_clients_due(){
+        //LOOP FOR SEARCHING IN CLIENTS LIST
         for(ClientV client : clientlist){
+            //CONDITION TO VALIDATE CLIENT HAS VACCINE DATA AND VACCINE IS DIFFERENT FROM JOHNSON&JOHNSON
             if(client.get_vaccine() != null && client.get_vaccine().get_company_id() != 4){
                 System.out.println("Client: " + client.get_name() + " | Vaccine: " + client.get_vaccine().get_company_name() + " | Due Date: " + client.get_vaccine().get_next_dose_date());
             }
