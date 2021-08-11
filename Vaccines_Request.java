@@ -1,7 +1,7 @@
 package Vaccine_Request;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.io.File;
@@ -80,8 +80,8 @@ public class Vaccines_Request{
                     clearScreen();
                     break;
 
-                case 2:
-                    //CASE 2 FOR REMOVING CLIENTS FROM VACCINE CENTRE CLIENTS LIST
+                //CASE 2 FOR REMOVING CLIENTS FROM VACCINE CENTRE CLIENTS LIST
+                case 2: 
                     clearScreen();
                     System.out.println("Enter client id code to remove:");
                     String id_client = System.console().readLine();
@@ -91,11 +91,11 @@ public class Vaccines_Request{
                     clearScreen();
                     break;
 
+                //CASE 3 FOR RECORDING A SPECIFIC CLIENTS FIRST VACCINATION
                 case 3:
-                    //CASE 3 FOR RECORDING A SPECIFIC CLIENTS FIRST VACCINATION
                     int company_id=0, batch_number=0;
                     String company_name="";
-                    LocalDateTime vaccine_date = LocalDateTime.now();
+                    LocalDate vaccine_date = LocalDate.now();
                     boolean complation_status = false;
 
                     clearScreen();
@@ -168,32 +168,48 @@ public class Vaccines_Request{
                         ClientV objclientupdate = new ClientV(objclientactual.get_idClient(), objclientactual.get_phoneClient(), objclientactual.get_firstName(), objclientactual.get_lastName(), company_name, company_id, batch_number, vaccine_date, complation_status);
                         objvaccinecentre.addvaccineclient(index, objclientupdate);
                     }
-                    
+
                     break;
 
+                //CASE 4 FOR SHOWING ALL THE CLIENTS FOR THIS VACCINE CENTRE
                 case 4:
-                    //CASE 4 FOR SHOWING ALL THE CLIENTS FOR THIS VACCINE CENTRE
                     clearScreen();
                     objvaccinecentre.show_all_clients();
                     System.out.println("This are the registered clients for this vaccine centre. Press Enter to continue.");
                     System.console().readLine();
                     clearScreen();
                     break;
-
+               
+                //CASE 5 FOR SHOWING STATISTICS OF CLIENTS GIVEN EACH VACCINE TYPE
                 case 5:
+                    clearScreen();
+                    objvaccinecentre.show_stats();
+                    System.out.println("Press Enter to continue");
+                    System.console().readLine();
+                    clearScreen();
                     break;
 
+                //CASE 6 FOR SHOWING CLIENTS DUE A SECOND VACCINE AND THE DATE DUE
                 case 6:
+                    clearScreen();
+                    objvaccinecentre.show_clients_due();
+                    System.out.println("Press Enter to continue");
+                    System.console().readLine();
+                    clearScreen();
                     break;
 
+                //CASE FOR LOADING CLIENTS DATA SAVED IN A TEXT FILE
                 case 7:
-                    //CASE FOR LOADING CLIENTS DATA SAVED IN A TEXT FILE
                     clearScreen();
                     objvaccinecentre.load_client_data(file, objvaccinecentre);
+                    System.out.println("Clients have been uploaded from txt file!");
+                    System.out.println("Press Enter to continue");
+                    System.console().readLine();
+                    clearScreen();
                     break;
 
+                //CASE FOR SAVING CLIENTS DATA IN A TXT FILE
                 case 8:
-                    //CASE FOR SAVING CLIENTS DATA IN A TXT FILE
                     clearScreen();
                     objvaccinecentre.save_client_data(file);
                     System.out.println("The clients have been saved!");

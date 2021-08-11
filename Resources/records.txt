@@ -1,0 +1,16 @@
+Redford,James,111,111222,1,Pfizer,123456,2021-08-11,4,-
+Esposito,Mary,112,112222,2,Astra-Zenica,321654,2021-08-11,8,-
+Williams,David,113,113222,3,Moderna,142536,2021-08-11,4,-
+Anderson,Susan,114,114222,4,Johnson&Johnson,635241,2021-08-11
+Darwin,Charles,115,115222, -
+Streisand,Barbara,116,116222, -
+Green,Mark,117,117222, -
+Benson,Ashley,118,118222, -
+Newman,Paul,119,119222, -
+Blunt,Emily,120,120222, -
+Bacon,Kevin,121,121222, -
+Redfield,Donna,122,122222, -
+Harrison,George,123,123222, -
+Smith,Carol,124,124222, -
+Planter,Nigel,125,125222, -
+Clarkson,Stephanie,126,126222, -

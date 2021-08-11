@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.time.format.DateTimeFormatter;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 //import Vaccine_Request.ClientV;
 
@@ -21,6 +21,10 @@ public class VaccineCentre {
         eircode_VaccineCentre = "123456";
 
         clientlist = new ArrayList<ClientV>();
+    }
+
+    public ClientV get_clientlist(){
+        return clientlist;
     }
 
     //FUNCTION TO ADD NEW CLIENT TO CLIENTS LIST
@@ -85,7 +89,7 @@ public class VaccineCentre {
             //OBJECT FROM BUFFEREDREADER CLASS THAT BUFFERE TXT FILE DATA
             BufferedReader br = new BufferedReader(new FileReader(file));
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
             //VARIABLE TO STORE LINES FROM TXT FILE
             String line;
@@ -106,7 +110,7 @@ public class VaccineCentre {
                     if(split_txt_line(line, 5).equalsIgnoreCase("4")){
                         complation_status = true;
                     }
-                    client = new ClientV(split_txt_line(line, 3), split_txt_line(line, 4), split_txt_line(line, 2), split_txt_line(line, 1), split_txt_line(line, 6), Integer.parseInt(split_txt_line(line, 5)), Integer.parseInt(split_txt_line(line, 7)), LocalDateTime.parse(split_txt_line(line, 8).concat(" 00:00"), formatter), complation_status);
+                    client = new ClientV(split_txt_line(line, 3), split_txt_line(line, 4), split_txt_line(line, 2), split_txt_line(line, 1), split_txt_line(line, 6), Integer.parseInt(split_txt_line(line, 5)), Integer.parseInt(split_txt_line(line, 7)), LocalDate.parse(split_txt_line(line, 8), formatter), complation_status);
                 }
                 
                 //ADDING CLIENT TO CURRENT CLIENTS LIST FOR THE VACCINE CENTRE
@@ -162,5 +166,49 @@ public class VaccineCentre {
         }
         
         return value;
+    }
+
+    //THIS FUNCTION IS FOR SHOWING THE % OF CLIENTS THAT HAVE BEEN GIVEN EACH OF THE VACCINES TYPE
+    public void show_stats(){
+        int vaccine_count = 0, pfizer_count = 0, astra_count = 0, moderna_count = 0, johnson_count = 0;
+        for(ClientV client : clientlist){
+            if(client.get_vaccine() != null){
+                vaccine_count += 1;
+                switch(client.get_vaccine().get_company_id()){
+                    case 1:
+                        pfizer_count++;
+                        break;
+                    case 2:
+                        astra_count++;
+                        break;
+                    case 3:
+                        moderna_count++;
+                        break;
+                    case 4:
+                        johnson_count++;
+                        break;
+                }
+            }
+        }
+
+        float pfizer_percentage = (pfizer_count*100.0f)/vaccine_count;
+        float astra_percentage = (astra_count*100.0f)/vaccine_count;
+        float moderna_percentage = (moderna_count*100.0f)/vaccine_count;
+        float johnson_percentage = (johnson_count*100.0f)/vaccine_count;
+
+        System.out.println("Clients for Pfizer vaccine: "+pfizer_percentage+"%");
+        System.out.println("Clients for Astra-Zenica vaccine: "+astra_percentage+"%");
+        System.out.println("Clients for Moderna vaccine: "+moderna_percentage+"%");
+        System.out.println("Clients for Johnson&Johnson vaccine: "+johnson_percentage+"%");
+        System.out.println("Clients vaccinated: "+vaccine_count);
+    }
+
+    //THIS FUNCTION IS FOR SHOWING CLIENTS EXPECTING SECOND DOSE
+    public void show_clients_due(){
+        for(ClientV client : clientlist){
+            if(client.get_vaccine() != null && client.get_vaccine().get_company_id() != 4){
+                System.out.println("Client: " + client.get_name() + " | Vaccine: " + client.get_vaccine().get_company_name() + " | Due Date: " + client.get_vaccine().get_next_dose_date());
+            }
+        }
     }
 }

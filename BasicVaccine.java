@@ -1,17 +1,17 @@
 package Vaccine_Request;
 
 import java.time.format.DateTimeFormatter;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class BasicVaccine {
 
     private String company_name;
     private int company_id, batch_number, weeks=0;
-    private LocalDateTime vaccine_date, next_vaccine_dose_date;
+    private LocalDate vaccine_date, next_vaccine_dose_date;
     private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private boolean complation_status;
 
-    public BasicVaccine(String company_name, int company_id, int batch_number, LocalDateTime vaccine_date, boolean complation_status){
+    public BasicVaccine(String company_name, int company_id, int batch_number, LocalDate vaccine_date, boolean complation_status){
         this.company_name = company_name;
         this. company_id = company_id;
         this.batch_number = batch_number;
@@ -19,12 +19,12 @@ public class BasicVaccine {
         this.complation_status = complation_status;
     }
 
-    public LocalDateTime get_next_dose_date(){
+    public LocalDate get_next_dose_date(){
         if(complation_status){
             next_vaccine_dose_date = null;
         }
         else{
-            next_vaccine_dose_date = vaccine_date.plusWeeks(get_weeks_next_dose(id_company));
+            next_vaccine_dose_date = vaccine_date.plusWeeks(get_weeks_next_dose(company_id));
         }
         return next_vaccine_dose_date;
     }
@@ -43,6 +43,14 @@ public class BasicVaccine {
                 break;
         }
         return weeks;
+    }
+
+    public int get_company_id(){
+        return company_id;
+    }
+
+    public String get_company_name(){
+        return company_name;
     }
     
     public String toString(){

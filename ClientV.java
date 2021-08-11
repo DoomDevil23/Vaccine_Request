@@ -1,6 +1,6 @@
 package Vaccine_Request;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class ClientV{
     private String idClient, phoneClient;
@@ -8,7 +8,7 @@ public class ClientV{
     private BasicVaccine vaccine;
 
     //CONSTRUCTOR USED WHEN A CLIENT IS VACCINATED
-    public ClientV(String idClient, String phoneClient, String fName, String lName, String company_name, int company_id, int batch_number, LocalDateTime vaccine_date, boolean complation_status){
+    public ClientV(String idClient, String phoneClient, String fName, String lName, String company_name, int company_id, int batch_number, LocalDate vaccine_date, boolean complation_status){
         this.idClient = idClient;
         this.phoneClient = phoneClient;
         name = new Name(fName, lName);
@@ -31,12 +31,20 @@ public class ClientV{
         return phoneClient;
     }
 
+    public Name get_name(){
+        return name;
+    }
+
     public String get_firstName(){
         return name.get_firstName();
     }
 
     public String get_lastName(){
         return name.get_lastName();
+    }
+
+    public BasicVaccine get_vaccine(){
+        return vaccine;
     }
 
     public String toString(){
