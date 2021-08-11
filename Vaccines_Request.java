@@ -10,8 +10,9 @@ import java.io.File;
 public class Vaccines_Request{
     public static void main(String[] args){
         VaccineCentre objvaccinecentre = new VaccineCentre();
-        int choice = 0;
+        int choice;
 
+        //A NEW FILE IS CREATED IF NOT EXIST. ELSE THIS DOES NOTHING, BUT INITIALIZE THE VARIABLE
         File file = new File("Resources/records.txt");
 
         try{
@@ -26,7 +27,9 @@ public class Vaccines_Request{
             
         }
 
+        //LOOP FOR KEEPING INSIDE MENU UNTIL QUIT OPTION IS SELECTED
         do{
+            choice=0;
             System.out.println("Cork Vaccination Center");
             System.out.println("===================");
             System.out.println("1 - Add a Client for this Vaccine Centre");
@@ -41,9 +44,11 @@ public class Vaccines_Request{
             System.out.print("Enter choice:");
             
             try{
+                //CAST READLINE INTO INTEGER TO USE SWITCH
                 choice = Integer.parseInt(System.console().readLine());
                 clearScreen();
             }
+            //CATCH FOR NON INTEGER INPUTS
             catch(Exception e){
                 clearScreen();
                 System.out.println("Enter a value between 0 - 9");
@@ -108,8 +113,8 @@ public class Vaccines_Request{
                         System.out.println("This client doesnt exist!");
                     }
                     else{
-                        //reading the code for selected vaccine
-                        //loop until select a valid value
+                        //READING THE CODE FOR SELECTED VACCINE
+                        //LOOP UNTIL SELECT A VALID VALUE
                         while(!(company_id<=4) || !(company_id>=1)){
                             System.out.println("1 - Pfizer");
                             System.out.println("2 - Astra-Zenica");
@@ -120,20 +125,20 @@ public class Vaccines_Request{
                             try{
                                 company_id = Integer.parseInt(System.console().readLine());
                                 
-                                //validating company_id in right range
+                                //VALIDATING COMPANY_ID IN RIGHT RANGE
                                 if(company_id>4 || company_id<1){
                                     System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
                                     System.out.println("Invalid value of:"+company_id+". Enter a number between 1-4");
                                 }
                             }
-                            //error throws when input is not integer value
+                            //ERROR THROWS WHEN INPUT IS NOT INTEGER VALUE
                             catch(Exception e){
                                 System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
                                 System.out.println("Enter a number between 1-4");
                             }
                         }
 
-                        //selecting company name according to company code
+                        //SELECTING COMPANY NAME ACCORDING TO COMPANY CODE
                         switch (company_id) {
                             case 1:
                                 company_name="Pfizer";
@@ -222,6 +227,7 @@ public class Vaccines_Request{
         }while(choice != 9);
     }
 
+    /********** FUNCTION FOR WIPING OLD DATA FROM SCREEN **********/
     public static void clearScreen(){
         System.out.print("\033[H\033[2J");
         System.out.flush();
